@@ -1,0 +1,18 @@
+{
+  "toggleLang": "English",
+  "dashboardTitle": "Tableau de bord des inscriptions universitaires",
+  "chart1Title": "Inscriptions par université et type",
+  "chart2Title": "Inscriptions totales par province",
+  "filterProvince": "Choisir les provinces",
+  "studyLevel": "Niveau d'études",
+  "undergrad": "Premier cycle",
+  "grad": "Études supérieures",
+  "studyMode": "Mode d'études",
+  "fullTime": "Temps plein",
+  "partTime": "Temps partiel",
+  "totalEnrollment": "Inscriptions totales",
+  "fullTimeUG": "Premier cycle temps plein",
+  "fullTimeGrad": "Cycles supérieurs temps plein",
+  "partTimeUG": "Premier cycle temps partiel",
+  "partTimeGrad": "Cycles supérieurs temps partiel"
+}

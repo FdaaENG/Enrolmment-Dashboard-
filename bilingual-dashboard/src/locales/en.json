@@ -1,0 +1,18 @@
+{
+  "toggleLang": "Français",
+  "dashboardTitle": "University Enrolment Dashboard",
+  "chart1Title": "Enrolment by University and Type",
+  "chart2Title": "Total Enrolment by Province",
+  "filterProvince": "Select Provinces",
+  "studyLevel": "Study Level",
+  "undergrad": "Undergraduate",
+  "grad": "Graduate",
+  "studyMode": "Study Mode",
+  "fullTime": "Full-time",
+  "partTime": "Part-time",
+  "totalEnrollment": "Total Enrolment",
+  "fullTimeUG": "Full-time UG",
+  "fullTimeGrad": "Full-time Grad",
+  "partTimeUG": "Part-time UG",
+  "partTimeGrad": "Part-time Grad"
+}
