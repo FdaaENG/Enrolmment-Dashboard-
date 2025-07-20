@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Line, Doughnut } from "react-chartjs-2";
+import { Line, Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   LineElement,
   PointElement,
-  ArcElement,
+  BarElement,
   CategoryScale,
   LinearScale,
   Tooltip,
@@ -18,7 +18,7 @@ import "../dashboardStyle.css";
 ChartJS.register(
   LineElement,
   PointElement,
-  ArcElement,
+  BarElement,
   CategoryScale,
   LinearScale,
   Tooltip,
@@ -34,12 +34,7 @@ const Dashboard = () => {
   const { t, i18n } = useTranslation();
   const [language, setLanguage] = useState("en");
   const [selectedProvinces, setSelectedProvinces] = useState("Nova Scotia");
-  const [selectedTypes, setSelectedTypes] = useState([
-    "fullTimeUG",
-    "fullTimeGrad",
-    "partTimeUG",
-    "partTimeGrad",
-  ]);
+  const [selectedType, setSelectedType] = useState("fullTimeUG");
   const [selectedStudyLevel, setSelectedStudyLevel] = useState("UG");
   const [selectedStudyMode, setSelectedStudyMode] = useState("fullTime");
   const [data, setData] = useState([]);
@@ -50,8 +45,9 @@ const Dashboard = () => {
       header: true,
       complete: function (results) {
         const cleaned = results.data
-          .filter((d) => d["University"])
+          .filter((d) => d["University"] && d["Year"])
           .map((d) => ({
+            year: d["Year"],
             university: d["University"],
             fullTimeUG: parseNumber(d["Full-time Undergrad"]),
             fullTimeGrad: parseNumber(d["Full-time Graduate"]),
@@ -65,6 +61,7 @@ const Dashboard = () => {
   }, []);
 
   const provinces = [...new Set(data.map((d) => d.province))];
+  const years = [...new Set(data.map((d) => d.year))].sort();
 
   const handleLanguageToggle = () => {
     const newLang = language === "en" ? "fr" : "en";
@@ -72,45 +69,72 @@ const Dashboard = () => {
     i18n.changeLanguage(newLang);
   };
 
-  const filteredData1 = data.filter((d) =>
-    selectedProvinces ? d.province === selectedProvinces : true
-  );
-
-  const colors = [
-    "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"
-  ];
+  const filteredData = data.filter((d) => d.province === selectedProvinces);
 
   const chart1Data = {
-    labels: filteredData1.map((d) => d.university),
-    datasets: selectedTypes.map((type, index) => ({
-      label: t(type),
-      data: filteredData1.map((d) => d[type]),
-      borderColor: colors[index % colors.length],
-      backgroundColor: colors[index % colors.length],
-      tension: 0.3,
-      fill: false,
-    })),
+    labels: years,
+    datasets: [
+      {
+        label: t(selectedType),
+        data: years.map((year) =>
+          filteredData
+            .filter((d) => d.year === year)
+            .reduce((sum, d) => sum + d[selectedType], 0)
+        ),
+        borderColor: "#36A2EB",
+        backgroundColor: "#36A2EB",
+        tension: 0.3,
+        fill: false,
+      },
+    ],
   };
+
+  const key = selectedStudyMode + selectedStudyLevel;
 
   const provincesSummary = provinces.map((province) => {
     const filtered = data.filter((d) => d.province === province);
-    const key = `${selectedStudyMode}${selectedStudyLevel}`;
     const total = filtered.reduce((acc, d) => acc + (d[key] || 0), 0);
     return { province, total };
   });
+
+  const chart1Options = {
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false, // hide legend on line chart
+      },
+    },
+  };
 
   const chart2Data = {
     labels: provincesSummary.map((p) => p.province),
     datasets: [
       {
-        label: t("totalEnrollment"),
+        label: "", // no label to avoid legend text
         data: provincesSummary.map((p) => p.total),
         backgroundColor: [
-          "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF",
-          "#FF9F40", "#C9CBCF", "#36A2EB", "#FF6384", "#4BC0C0"
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56",
+          "#4BC0C0",
+          "#9966FF",
+          "#FF9F40",
+          "#C9CBCF",
+          "#36A2EB",
+          "#FF6384",
+          "#4BC0C0",
         ],
       },
     ],
+  };
+
+  const chart2Options = {
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false, // hide legend on bar chart
+      },
+    },
   };
 
   return (
@@ -130,35 +154,34 @@ const Dashboard = () => {
           >
             <option value="">{t("selectProvince")}</option>
             {provinces.map((p) => (
-              <option key={p} value={p}>{p}</option>
+              <option key={p} value={p}>
+                {p}
+              </option>
             ))}
           </select>
 
-          <div className="checkbox-group">
-            {[
-              "fullTimeUG",
-              "fullTimeGrad",
-              "partTimeUG",
-              "partTimeGrad",
-            ].map((type) => (
-              <label key={type}>
-                <input
-                  type="checkbox"
-                  checked={selectedTypes.includes(type)}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setSelectedTypes([...selectedTypes, type]);
-                    } else {
-                      setSelectedTypes(selectedTypes.filter((t) => t !== type));
-                    }
-                  }}
-                />
-                {t(type)}
-              </label>
-            ))}
-          </div>
+          <label>{t("filterStudyType")}</label>
+          <select
+            className="full-width"
+            value={selectedType}
+            onChange={(e) => setSelectedType(e.target.value)}
+          >
+            <option value="">{t("selectStudyType")}</option>
+            {["fullTimeUG", "fullTimeGrad", "partTimeUG", "partTimeGrad"].map(
+              (type) => (
+                <option key={type} value={type}>
+                  {t(type)}
+                </option>
+              )
+            )}
+          </select>
         </div>
-        <Line data={chart1Data} options={{ maintainAspectRatio: false }} height={300} />
+        <Line data={chart1Data} options={chart1Options} height={300} />
+        <p className="chart-description">
+          {language === "en"
+            ? "Shows total enrolment from 2020 to 2025, filtered by province and study type."
+            : "Affiche les inscriptions totales de 2020 à 2025, filtrées par province et type d’études."}
+        </p>
       </div>
 
       <div className="chart-column">
@@ -184,7 +207,12 @@ const Dashboard = () => {
             <option value="partTime">{t("partTime")}</option>
           </select>
         </div>
-        <Doughnut data={chart2Data} options={{ maintainAspectRatio: false }} height={300} />
+        <Bar data={chart2Data} options={chart2Options} height={300} />
+        <p className="chart-description">
+          {language === "en"
+            ? "Displays total enrolment by province based on selected study level and mode."
+            : "Affiche les inscriptions totales par province selon le niveau et le mode d’études sélectionnés."}
+        </p>
       </div>
     </div>
   );

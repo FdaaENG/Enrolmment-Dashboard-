@@ -1,9 +1,10 @@
 {
   "toggleLang": "Français",
   "dashboardTitle": "University Enrolment Dashboard",
-  "chart1Title": "Enrolment by University and Type",
+  "chart1Title": "Enrollment Trends (2020–2025) by Province and Type",
   "chart2Title": "Total Enrolment by Province",
-  "filterProvince": "Select Provinces",
+  "filterProvince": "Provinces",
+  "filterStudyType": "Study Type",
   "studyLevel": "Study Level",
   "undergrad": "Undergraduate",
   "grad": "Graduate",

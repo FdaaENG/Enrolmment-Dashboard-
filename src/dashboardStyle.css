@@ -1,4 +1,4 @@
-/* dashboardStyle.css */
+/* dashboardStyle.css - Dark Theme */
 
 .dashboard-container {
   display: flex;
@@ -6,16 +6,17 @@
   gap: 2rem;
   justify-content: space-between;
   padding: 4rem;
-  background-color: #f4f6f8;
+  background-color: #121212; /* Dark background */
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #e0e0e0; /* Light text for contrast */
 }
 
 .chart-column {
   flex: 1 1 45%;
-  background-color: #fff;
+  background-color: #1e1e1e; /* Dark card background */
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8); /* Darker shadow */
   min-width: 350px;
   display: flex;
   flex-direction: column;
@@ -35,7 +36,7 @@
 .filters label {
   font-weight: 600;
   margin-bottom: 0.25rem;
-  color: #333;
+  color: #ccc; /* Lighter label text */
   font-size: 15px;
 }
 
@@ -43,15 +44,16 @@
 .full-width {
   padding: 12px 16px;
   border-radius: 8px;
-  border: 1px solid #d1d5db;
-  background-color: #ffffff;
+  border: 1px solid #444; /* Darker border */
+  background-color: #2a2a2a; /* Dark input background */
+  color: #e0e0e0; /* Light input text */
   font-size: 15px;
   font-weight: 500;
   width: 100%;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  box-shadow: none;
   transition: all 0.3s ease;
   appearance: none;
-  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>"); /* white arrow */
   background-repeat: no-repeat;
   background-position-x: 98%;
   background-position-y: 50%;
@@ -60,14 +62,14 @@
 .filters select:hover,
 .full-width:hover {
   border-color: #4bc0c0;
-  background-color: #f9fafb;
+  background-color: #333; /* Slightly lighter on hover */
 }
 
 .filters select:focus,
 .full-width:focus {
   border-color: #4bc0c0;
   outline: none;
-  background-color: #ffffff;
+  background-color: #2a2a2a;
 }
 
 .checkbox-group {
@@ -80,7 +82,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background-color: #e0f7fa;
+  background-color: #004d40; /* Dark teal */
   border-radius: 20px;
   padding: 8px 16px;
   font-size: 14px;
@@ -88,10 +90,11 @@
   cursor: pointer;
   border: 1px solid transparent;
   transition: all 0.3s ease;
+  color: #b2dfdb; /* Light teal text */
 }
 
 .checkbox-group label:hover {
-  background-color: #b2ebf2;
+  background-color: #00695c; /* Lighter teal */
   border-color: #4bc0c0;
 }
 
@@ -104,7 +107,7 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background-color: #007bff;
+  background-color: #00897b; /* Teal button */
   color: white;
   border: none;
   padding: 0.6rem 1rem;
@@ -115,12 +118,12 @@
 }
 
 .lang-toggle:hover {
-  background-color: #0056b3;
+  background-color: #004d40;
 }
 
 h2 {
   font-size: 1.25rem;
-  color: #333;
+  color: #e0e0e0; /* Light headings */
   margin-bottom: 1rem;
   text-align: center;
 }

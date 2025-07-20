@@ -1,9 +1,10 @@
 {
   "toggleLang": "English",
   "dashboardTitle": "Tableau de bord des inscriptions universitaires",
-  "chart1Title": "Inscriptions par université et type",
+  "chart1Title": "Inscriptions (2020–2025) par province et type",
   "chart2Title": "Inscriptions totales par province",
-  "filterProvince": "Choisir les provinces",
+  "filterProvince": "Provinces",
+  "filterStudyType": "Type d'étude",
   "studyLevel": "Niveau d'études",
   "undergrad": "Premier cycle",
   "grad": "Études supérieures",
